@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 
 export default function Countdown() {
   // Update this date to your actual event date
-  const targetDate = new Date('2025-05-01T00:00:00').getTime();
+  const targetDate = new Date('2026-04-24T06:00:00').getTime();
 
   const [timeLeft, setTimeLeft] = useState({
     days: 0,

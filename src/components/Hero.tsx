@@ -14,10 +14,10 @@ export default function Hero({ onNavigate }: HeroProps) {
 
       <div className="relative z-10 text-center px-4 sm:px-6 lg:px-8">
         <h1
-          className="text-6xl sm:text-7xl md:text-8xl font-bold mb-6 glitch-text neon-text-large text-red-600"
-          data-text="UPSIDE DOWN"
+          className="text-6xl sm:text-7xl md:text-8xl font-bold mb-6 text-large text-red-600"
+          data-text="Eucrasia 2026"
         >
-          UPSIDE DOWN
+          Eucrasia 2026
         </h1>
 
         <p className="text-2xl sm:text-3xl md:text-4xl text-red-500 mb-4 animate-flicker">
@@ -25,7 +25,7 @@ export default function Hero({ onNavigate }: HeroProps) {
         </p>
 
         <p className="text-lg sm:text-xl text-gray-400 mb-12 max-w-2xl mx-auto">
-          Enter the Upside Down Experience
+          Enter the Eucrasia Experience
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -33,7 +33,7 @@ export default function Hero({ onNavigate }: HeroProps) {
             onClick={() => onNavigate('registration')}
             className="px-8 py-4 bg-red-600 text-white rounded-lg font-bold text-lg hover:bg-red-700 transition-all duration-300 neon-button transform hover:scale-105"
           >
-            Register Now
+            Basic Registration
           </button>
 
           <button

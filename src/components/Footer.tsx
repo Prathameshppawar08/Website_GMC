@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto">
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           <div>
-            <h3 className="text-2xl font-bold text-red-600 neon-text mb-4">UPSIDE DOWN</h3>
+            <h3 className="text-2xl font-bold text-red-600 neon-text mb-4">Eucrasia 2026</h3>
             <p className="text-gray-400 mb-4">
               Experience the most thrilling tech and cultural event of the year. Step into the
               Upside Down and unlock your potential.

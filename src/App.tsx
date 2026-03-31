@@ -30,10 +30,10 @@ function App() {
       <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
           <h1
-            className="text-6xl font-bold text-red-600 neon-text-large mb-8 glitch-text animate-pulse"
-            data-text="UPSIDE DOWN"
+            className="text-6xl font-bold text-red-600 text-large mb-8  animate-pulse"
+            data-text="Eucrasia 2026"
           >
-            UPSIDE DOWN
+            Eucrasia 2026
           </h1>
           <div className="flex justify-center gap-2">
             <div className="w-3 h-3 bg-red-600 rounded-full animate-bounce"></div>

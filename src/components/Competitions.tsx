@@ -54,7 +54,7 @@ export default function Competitions() {
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="text-center mb-16">
           <h2
-            className="text-5xl sm:text-6xl font-bold text-red-600 neon-text mb-4 glitch-text"
+            className="text-5xl sm:text-6xl font-bold text-red-600  mb-4"
             data-text="COMPETITIONS"
           >
             COMPETITIONS
