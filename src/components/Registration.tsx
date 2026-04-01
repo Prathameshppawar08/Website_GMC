@@ -6,7 +6,7 @@ export default function Registration() {
     "UG" | "PG" | "OTHER" | null
   >(null);
 
-  const forms = {
+ const forms = {
     UG: [
       { name: "Batch 103", link: "https://docs.google.com/forms/d/19W3ZxE_DDxaJ3agZiFzd-dFhaufKbTU5WiTPRWEiPvc/viewform?usp=header" },
       { name: "Batch 104", link: "https://docs.google.com/forms/d/1htxdMCqPIIzdRE5NR6UxEa-cFoj9pNvDydczF_kXidM/viewform?usp=header" },
@@ -25,19 +25,16 @@ export default function Registration() {
   const colorClasses = {
     UG: {
       border: "border-red-500",
-      hover: "hover:border-red-500",
       text: "text-red-500",
       button: "bg-red-600 hover:bg-red-700",
     },
     PG: {
       border: "border-blue-500",
-      hover: "hover:border-blue-500",
       text: "text-blue-500",
       button: "bg-blue-600 hover:bg-blue-700",
     },
     OTHER: {
       border: "border-green-500",
-      hover: "hover:border-green-500",
       text: "text-green-500",
       button: "bg-green-600 hover:bg-green-700",
     },
@@ -48,78 +45,81 @@ export default function Registration() {
   };
 
   return (
-    <section className="min-h-screen py-20 px-4 bg-black">
-      <div className="max-w-6xl mx-auto">
+    <section
+      id="registration"
+      className="py-16 px-4 bg-black" // ✅ removed min-h-screen
+    >
+      <div className="max-w-5xl mx-auto">
         {/* Header */}
-        <h2 className="text-5xl font-bold text-red-600 text-center mb-16">
+        <h2 className="text-4xl sm:text-5xl font-bold text-red-600 text-center mb-12">
           REGISTRATION
         </h2>
 
         {/* Cards */}
-        <div className="grid md:grid-cols-3 gap-8">
-          {["UG", "PG", "OTHER"].map((category) => (
-            <div
-              key={category}
-              onClick={() =>
-                handleClick(category as "UG" | "PG" | "OTHER")
-              }
-              className={`p-8 rounded-lg border-2 cursor-pointer transition-all duration-300 transform hover:scale-105 ${
-                selectedCategory === category
-                  ? colorClasses[category].border
-                  : `border-gray-700 ${colorClasses[category].hover}`
-              } bg-gray-900/50`}
-            >
-              <div className="flex justify-between mb-4">
-                <h3
-                  className={`text-3xl font-bold ${colorClasses[category].text}`}
+        <div className="flex flex-col gap-5">
+          {["UG", "PG", "OTHER"].map((category) => {
+            const isActive = selectedCategory === category;
+
+            return (
+              <div
+                key={category}
+                className={`rounded-xl border transition-all duration-300 ${
+                  isActive
+                    ? colorClasses[category].border
+                    : "border-gray-700 hover:border-gray-500"
+                } bg-gray-900/60`}
+              >
+                {/* Header */}
+                <div
+                  onClick={() =>
+                    handleClick(category as "UG" | "PG" | "OTHER")
+                  }
+                  className="p-5 cursor-pointer flex justify-between items-center"
                 >
-                  {category === "UG"
-                    ? "UG Registration"
-                    : category === "PG"
-                    ? "PG Registration"
-                    : "Other College"}
-                </h3>
-                <UserPlus
-                  className={colorClasses[category].text}
-                  size={32}
-                />
-              </div>
+                  <h3
+                    className={`text-xl sm:text-2xl font-semibold ${colorClasses[category].text}`}
+                  >
+                    {category === "UG"
+                      ? "UG Registration"
+                      : category === "PG"
+                      ? "PG Registration"
+                      : "Other College"}
+                  </h3>
 
-              <p className="text-gray-400">
-                Click to view registration forms
-              </p>
-            </div>
-          ))}
-        </div>
+                  <UserPlus
+                    className={colorClasses[category].text}
+                    size={24}
+                  />
+                </div>
 
-        {/* EXPANSION PANEL */}
-        {selectedCategory && (
-          <div className="mt-12 max-w-3xl mx-auto bg-gray-900/60 backdrop-blur-md p-8 rounded-xl border border-gray-800 animate-fadeIn">
-            <h3 className="text-2xl font-bold text-white mb-6 text-center">
-              {selectedCategory === "UG"
-                ? "UG Event Registrations"
-                : selectedCategory === "PG"
-                ? "PG Registration"
-                : "Other College Registration"}
-            </h3>
-
-            <div className="space-y-4">
-              {forms[selectedCategory].map((form, index) => (
-                <a
-                  key={index}
-                  href={form.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={`block w-full text-center p-4 rounded-lg font-semibold text-white transition-all duration-300 ${
-                    colorClasses[selectedCategory].button
+                {/* Expand Section */}
+                <div
+                  className={`transition-all duration-400 ease-in-out overflow-hidden ${
+                    isActive ? "max-h-[400px] px-5 pb-5" : "max-h-0"
                   }`}
                 >
-                  {form.name}
-                </a>
-              ))}
-            </div>
-          </div>
-        )}
+                  <div className="space-y-3">
+                    {forms[category as keyof typeof forms].map(
+                      (form, index) => (
+                        <a
+                          key={index}
+                          href={form.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className={`block text-center py-3 rounded-lg text-white font-medium ${
+                            colorClasses[category].button
+                          }`}
+                        >
+                          {form.name}
+                        </a>
+                      )
+                    )}
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
