@@ -1,193 +1,138 @@
-import { useState } from 'react';
-import { UserPlus, AlertCircle, CheckCircle } from 'lucide-react';
-
-interface FormData {
-  name: string;
-  email: string;
-  phone: string;
-  collegeName: string;
-}
+import { useState } from "react";
+import { UserPlus } from "lucide-react";
 
 export default function Registration() {
-  const [selectedCategory, setSelectedCategory] = useState<'UG' | 'PG' | null>(null);
-  const [formData, setFormData] = useState<FormData>({
-    name: '',
-    email: '',
-    phone: '',
-    collegeName: '',
-  });
-  const [loading, setLoading] = useState(false);
-  const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<
+    "UG" | "PG" | "OTHER" | null
+  >(null);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!selectedCategory) return;
-
-    setLoading(true);
-    setMessage(null);
-
-    try {
-      // Save to localStorage
-      const registrations = JSON.parse(localStorage.getItem('gmc_registrations') || '[]');
-      const newEntry = {
-        id: Date.now(),
-        ...formData,
-        category: selectedCategory,
-        amount: selectedCategory === 'UG' ? 400 : 600,
-        timestamp: new Date().toISOString(),
-      };
-      registrations.push(newEntry);
-      localStorage.setItem('gmc_registrations', JSON.stringify(registrations));
-
-      setMessage({
-        type: 'success',
-        text: 'Registration successful! Payment link will be sent to your email.',
-      });
-      setFormData({ name: '', email: '', phone: '', collegeName: '' });
-      setSelectedCategory(null);
-    } catch {
-      setMessage({
-        type: 'error',
-        text: 'Registration failed. Please try again.',
-      });
-    } finally {
-      setLoading(false);
-    }
+  // 🔥 Replace these with your actual Google Form links
+  const forms = {
+    UG: [
+      { name: "Batch 103", link: "https://docs.google.com/forms/d/19W3ZxE_DDxaJ3agZiFzd-dFhaufKbTU5WiTPRWEiPvc/viewform?usp=header" },
+      { name: "Batch 104", link: "https://docs.google.com/forms/d/1htxdMCqPIIzdRE5NR6UxEa-cFoj9pNvDydczF_kXidM/viewform?usp=header" },
+      { name: "Batch 105", link: "https://docs.google.com/forms/d/1RUPwL9zAcHVGwsjH2iUtGUV07D0Q1-32hBk8ge8Kbxw/viewform?usp=header" },
+      { name: "Batch 106", link: "https://docs.google.com/forms/d/1XhxcBk-lMhvLVzb26qa-ExkKFpDfqkKoQkomAWyzXhY/viewform?usp=header" },
+      { name: "Batch 107", link: "https://docs.google.com/forms/d/1tJAegqXvEMyk3Huyd0LxkMMUL4nIe_BEDVG3DqlPjXc/viewform?usp=header" },
+    ],
+    PG: [
+      { name: "PGY", link: "https://docs.google.com/forms/d/13O2StsfXDT_xcnbRE0KPusXRSd_BGL6G_viRv7W6ByU/viewform?usp=header" }
+    ],
+    OTHER: [
+      { name: "Other College Registration", link: "https://docs.google.com/forms/d/1zaNdx0IjS1Uomfuo40MPJ69JCuY6nAS8ujM0if5gnmQ/viewform?usp=header" }
+    ],
   };
 
   return (
-    <section id="registration" className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-black relative">
+    <section
+      id="registration"
+      className="min-h-screen py-20 px-4 sm:px-6 lg:px-8 bg-black relative"
+    >
       <div className="absolute inset-0 bg-gradient-to-b from-black via-blue-950/10 to-black"></div>
 
       <div className="max-w-6xl mx-auto relative z-10">
+        {/* Header */}
         <div className="text-center mb-16">
-          <h2
-            className="text-5xl sm:text-6xl font-bold text-red-600  mb-4 "
-            data-text="REGISTRATION"
-          >
+          <h2 className="text-5xl sm:text-6xl font-bold text-red-600 mb-4">
             REGISTRATION
           </h2>
           <p className="text-gray-400 text-lg">
-            Mandatory for all participants and audience • Valid for 4-day event access
+            Mandatory for all participants • Valid for 4-day event access
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 mb-12">
-          {/* UG Card */}
+        {/* Cards */}
+        <div className="grid md:grid-cols-3 gap-8 mb-12">
+          {/* UG */}
           <div
-            onClick={() => setSelectedCategory('UG')}
+            onClick={() => setSelectedCategory("UG")}
             className={`p-8 rounded-lg border-2 cursor-pointer transition-all duration-300 transform hover:scale-105 ${
-              selectedCategory === 'UG'
-                ? 'border-red-500 bg-red-950/20 neon-border'
-                : 'border-gray-700 bg-gray-900/50 hover:border-red-500'
+              selectedCategory === "UG"
+                ? "border-red-500 bg-red-950/20"
+                : "border-gray-700 bg-gray-900/50 hover:border-red-500"
             }`}
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-3xl font-bold text-red-500">UG Registration</h3>
+              <h3 className="text-3xl font-bold text-red-500">
+                UG Registration
+              </h3>
               <UserPlus className="text-red-500" size={32} />
             </div>
             <p className="text-5xl font-bold text-white mb-4">₹400</p>
             <p className="text-gray-400">For undergraduate students</p>
           </div>
 
-          {/* PG Card */}
+          {/* PG */}
           <div
-            onClick={() => setSelectedCategory('PG')}
+            onClick={() => setSelectedCategory("PG")}
             className={`p-8 rounded-lg border-2 cursor-pointer transition-all duration-300 transform hover:scale-105 ${
-              selectedCategory === 'PG'
-                ? 'border-blue-500 bg-blue-950/20 neon-border-blue'
-                : 'border-gray-700 bg-gray-900/50 hover:border-blue-500'
+              selectedCategory === "PG"
+                ? "border-blue-500 bg-blue-950/20"
+                : "border-gray-700 bg-gray-900/50 hover:border-blue-500"
             }`}
           >
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-3xl font-bold text-blue-500">PG Registration</h3>
+              <h3 className="text-3xl font-bold text-blue-500">
+                PG Registration
+              </h3>
               <UserPlus className="text-blue-500" size={32} />
             </div>
             <p className="text-5xl font-bold text-white mb-4">₹600</p>
             <p className="text-gray-400">For postgraduate students</p>
           </div>
+
+          {/* OTHER */}
+          <div
+            onClick={() => setSelectedCategory("OTHER")}
+            className={`p-8 rounded-lg border-2 cursor-pointer transition-all duration-300 transform hover:scale-105 ${
+              selectedCategory === "OTHER"
+                ? "border-green-500 bg-green-950/20"
+                : "border-gray-700 bg-gray-900/50 hover:border-green-500"
+            }`}
+          >
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-3xl font-bold text-green-500">
+                Other College
+              </h3>
+              <UserPlus className="text-green-500" size={32} />
+            </div>
+            <p className="text-5xl font-bold text-white mb-4">₹500</p>
+            <p className="text-gray-400">
+              For participants from other colleges
+            </p>
+          </div>
         </div>
 
+        {/* Links Section */}
         {selectedCategory && (
           <div className="max-w-2xl mx-auto bg-gray-900/50 backdrop-blur-md p-8 rounded-lg border border-gray-800">
-            <h3 className="text-2xl font-bold text-white mb-6">
-              Complete Your {selectedCategory} Registration
+            <h3 className="text-2xl font-bold text-white mb-6 text-center">
+              {selectedCategory === "UG"
+                ? "UG Event Registrations"
+                : selectedCategory === "PG"
+                ? "PG Registration"
+                : "Other College Registration"}
             </h3>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
-                <label className="block text-gray-400 mb-2">Full Name</label>
-                <input
-                  type="text"
-                  required
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg text-white focus:border-red-500 focus:outline-none transition-colors"
-                  placeholder="Enter your full name"
-                />
-              </div>
-
-              <div>
-                <label className="block text-gray-400 mb-2">Email</label>
-                <input
-                  type="email"
-                  required
-                  value={formData.email}
-                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg text-white focus:border-red-500 focus:outline-none transition-colors"
-                  placeholder="your.email@example.com"
-                />
-              </div>
-
-              <div>
-                <label className="block text-gray-400 mb-2">Phone Number</label>
-                <input
-                  type="tel"
-                  required
-                  value={formData.phone}
-                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg text-white focus:border-red-500 focus:outline-none transition-colors"
-                  placeholder="+91 XXXXX XXXXX"
-                />
-              </div>
-
-              <div>
-                <label className="block text-gray-400 mb-2">College Name</label>
-                <input
-                  type="text"
-                  required
-                  value={formData.collegeName}
-                  onChange={(e) => setFormData({ ...formData, collegeName: e.target.value })}
-                  className="w-full px-4 py-3 bg-black/50 border border-gray-700 rounded-lg text-white focus:border-red-500 focus:outline-none transition-colors"
-                  placeholder="Your college name"
-                />
-              </div>
-
-              {message && (
-                <div
-                  className={`flex items-center gap-2 p-4 rounded-lg ${
-                    message.type === 'success'
-                      ? 'bg-green-950/50 border border-green-800 text-green-400'
-                      : 'bg-red-950/50 border border-red-800 text-red-400'
+            <div className="space-y-4">
+              {forms[selectedCategory].map((form, index) => (
+                <a
+                  key={index}
+                  href={form.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`block p-4 rounded-lg text-white font-semibold text-center transition-all duration-300 ${
+                    selectedCategory === "UG"
+                      ? "bg-red-600 hover:bg-red-700"
+                      : selectedCategory === "PG"
+                      ? "bg-blue-600 hover:bg-blue-700"
+                      : "bg-green-600 hover:bg-green-700"
                   }`}
                 >
-                  {message.type === 'success' ? (
-                    <CheckCircle size={20} />
-                  ) : (
-                    <AlertCircle size={20} />
-                  )}
-                  <p>{message.text}</p>
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={loading}
-                className="w-full px-8 py-4 bg-red-600 text-white rounded-lg font-bold text-lg hover:bg-red-700 transition-all duration-300 neon-button disabled:opacity-50 disabled:cursor-not-allowed"
-              >
-                {loading ? 'Processing...' : `Pay ₹${selectedCategory === 'UG' ? '400' : '600'} & Register`}
-              </button>
-            </form>
+                  {form.name}
+                </a>
+              ))}
+            </div>
           </div>
         )}
       </div>
